@@ -1,0 +1,2 @@
+com/haydnjm/covntdown/shared/BuildConfig.java
+ com.haydnjm.covntdown.shared.BuildConfig
