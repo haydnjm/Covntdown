@@ -1,6 +1,7 @@
 package com.haydnjm.covntdown.androidApp.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
 fun MainLayout() {
     val covntdownViewModel = getViewModel<CovntdownViewModel>()
 
+    var data = covntdownViewModel.getData();
+
     CovntdownTheme {
         Surface {
             Image(
@@ -41,7 +44,8 @@ fun MainLayout() {
                 modifier = Modifier.fillMaxSize(),
             ) {
                 Counter()
-                Text(covntdownViewModel.getData().infections.toString())
+                Text("INFECTIONS:")
+                Text(data.infected.toString())
             }
 
         }

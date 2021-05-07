@@ -1,5 +1,7 @@
 package com.haydnjm.covntdown.shared.di
 
+import com.haydnjm.covntdown.shared.remote.InfectionsApi
+import com.haydnjm.covntdown.shared.repository.CovntdownRepository
 import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -12,15 +14,17 @@ import org.koin.dsl.module
 fun initKoin(enableNetworkLogs: Boolean = false, appDeclaration: KoinAppDeclaration = {}) =
     startKoin {
         appDeclaration()
-        modules()
+        modules(commonModule(enableNetworkLogs = enableNetworkLogs))
     }
 
 // called by iOS etc
 fun initKoin() = initKoin(enableNetworkLogs = false) {}
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
-    single { createJson()}
+    single { createJson() }
     single { createHttpClient(get(), enableNetworkLogs = enableNetworkLogs) }
+    single { CovntdownRepository() }
+    single { InfectionsApi(get()) }
 }
 
 fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }

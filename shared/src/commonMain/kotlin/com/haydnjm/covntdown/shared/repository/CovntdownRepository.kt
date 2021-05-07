@@ -1,5 +1,6 @@
 package com.haydnjm.covntdown.shared.repository
 
+import android.util.Log
 import com.haydnjm.covntdown.shared.remote.Infections
 import com.haydnjm.covntdown.shared.remote.InfectionsApi
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +14,7 @@ class CovntdownRepository: KoinComponent {
 
     private val coroutineScope: CoroutineScope = MainScope()
 
-    lateinit var data: Infections
+    var data: Infections = Infections(recovered = 0, infected = 0)
 
     init {
         coroutineScope.launch {
@@ -22,7 +23,9 @@ class CovntdownRepository: KoinComponent {
     }
 
     suspend fun fetchInfections() {
-        data = infectionsApi.fetchLatestInfectionData()
+        var res = infectionsApi.fetchLatestInfectionData()
+        Log.d("DATA IN REPO", res.toString())
+        data = res
     }
 
 }
