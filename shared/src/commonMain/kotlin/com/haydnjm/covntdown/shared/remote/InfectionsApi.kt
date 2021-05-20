@@ -13,6 +13,6 @@ class InfectionsApi(
     private val baseUrl: String = "https://api.apify.com/v2/key-value-stores/vqnEUe7VtKNMqGqFF/records/LATEST?disableRedirect=true",
 ): KoinComponent {
     suspend fun fetchLatestInfectionData(): Infections {
-        return client.get<Infections>(baseUrl);
+        return client.get(baseUrl);
     }
 }

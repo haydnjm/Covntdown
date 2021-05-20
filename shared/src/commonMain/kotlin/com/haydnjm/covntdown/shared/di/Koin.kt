@@ -1,5 +1,6 @@
 package com.haydnjm.covntdown.shared.di
 
+import com.haydnjm.covntdown.shared.remote.EventsApi
 import com.haydnjm.covntdown.shared.remote.InfectionsApi
 import com.haydnjm.covntdown.shared.repository.CovntdownRepository
 import io.ktor.client.*
@@ -25,6 +26,7 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createHttpClient(get(), enableNetworkLogs = enableNetworkLogs) }
     single { CovntdownRepository() }
     single { InfectionsApi(get()) }
+    single { EventsApi(get()) }
 }
 
 fun createJson() = Json { isLenient = true; ignoreUnknownKeys = true }

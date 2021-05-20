@@ -1,19 +1,19 @@
 package com.haydnjm.covntdown.androidApp.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.haydnjm.covntdown.androidApp.R
 import org.koin.androidx.compose.getViewModel
 
@@ -28,9 +28,11 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun MainLayout() {
+
     val covntdownViewModel = getViewModel<CovntdownViewModel>()
 
-    var data = covntdownViewModel.getData();
+    var eventsData = covntdownViewModel.events.value
+
 
     CovntdownTheme {
         Surface {
@@ -43,10 +45,14 @@ fun MainLayout() {
             Column(
                 modifier = Modifier.fillMaxSize(),
             ) {
-                Counter()
-                Text("INFECTIONS:")
-                Text(data.infected.toString())
+                Column(Modifier.padding(bottom = 3.dp)) {
+                    eventsData.forEach { event -> Counter(event)
+                    }
+                }
+                Infections()
+
             }
+
 
         }
     }

@@ -13,16 +13,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.haydnjm.covntdown.androidApp.R
+import com.haydnjm.covntdown.shared.remote.Event
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 @Composable
-fun Counter() {
-    val timeRemaining = 544320000 // millisenconds
+fun Counter(event: Event) {
 
-    CountdownCard()
+    var now = LocalDate.now()
+    var formatter = DateTimeFormatter.ISO_DATE_TIME
+    var eventDate = LocalDate.parse(event.date, formatter)
+    var days = ChronoUnit.DAYS.between(now, eventDate)
+    CountdownCard(days, event.fullName)
 }
 
 @Composable
-fun CountdownCard() {
+fun CountdownCard(daysLeft: Long, fullName: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,12 +51,12 @@ fun CountdownCard() {
                 modifier = Modifier.padding(bottom = 3.dp, start = 20.dp)
             ) {
                 Text(
-                    "5 days left",
+                    "$daysLeft days left",
                     style = MaterialTheme.typography.h4,
                     color = Color.White,
                 )
                 Text(
-                    "Until you can stay out past 10pm",
+                    "Until you can $fullName",
                     style = MaterialTheme.typography.body1,
                     color = Color.White,
                 )
